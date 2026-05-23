@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TARJUMAN - Matrix Dictionary</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #060b13;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --emerald-accent: #10b981;
+            --text-title: #ffffff;
+            --text-body: #94a3b8;
+        }
+
+        body.light-theme {
+            --bg-main: #f1f5f9;
+            --card-bg: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-title: #0f172a;
+            --text-body: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-title);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Top App Bar Header Layout */
+        .app-header {
+            background: linear-gradient(to bottom, #0a1220, transparent);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-title);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .back-btn:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive Main Container Blueprint */
+        .about-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 110px;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Information Block Intro Card */
+        .intro-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .intro-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--emerald-accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .intro-text {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--text-body);
+            text-align: justify;
+        }
+
+        /* Dictionary Matrix Grid Table System */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 380px) {
+            .matrix-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .matrix-token-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+
+        .matrix-token-card:hover {
+            border-color: var(--emerald-accent);
+            background: rgba(16, 185, 129, 0.02);
+        }
+
+        .token-native-side {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .native-lang-row {
+            font-size: 0.8rem;
+            color: var(--text-body);
+            font-weight: 600;
+        }
+
+        .native-lang-row span {
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        body.light-theme .native-lang-row span {
+            color: #0f172a;
+        }
+
+        .token-crypto-symbol {
+            font-size: 1.7rem;
+            font-weight: 500;
+            color: var(--emerald-accent);
+        }
+
+        /* Standard Bottom Navigation Frame Dock Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(10, 18, 32, 0.9);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            width: 60px;
+        }
+
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--emerald-accent); }
+
+        .brand-signature-credit {
+            text-align: center;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.15);
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="dark-theme">
+
+    <header class="app-header">
+        <button class="back-btn" onclick="window.location.href='home.html'"><i class="fa-solid fa-arrow-left"></i></button>
+        <h1 class="header-title">Chorix Dictionary</h1>
+    </header>
+
+    <main class="about-container">
+        
+        <div class="intro-card">
+            <h2 class="intro-title"><i class="fa-solid fa-cubes-stacked"></i> Algorithmic Core Blueprint</h2>
+            <p class="intro-text">
+                The Tarjuman platform utilizes the proprietary Chorix Cryptographic Layer. This indexing structure translates linguistic string arrays into safe structural character mappings entirely inside the client viewport runtime architecture without server reliance.
+            </p>
+        </div>
+
+        <div class="matrix-grid" id="dictionaryGrid">
+            </div>
+
+        <div class="brand-signature-credit">
+            Chorix Alpha Ledger • <strong>Powered By HAIDER</strong>
+        </div>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fa-solid fa-house-laptop"></i>
+            <span>Hub</span>
+        </a>
+        <a href="about.html" class="nav-item active">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>About</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Settings</span>
+        </a>
+        <a href="support.html" class="nav-item">
+            <i class="fa-solid fa-headset"></i>
+            <span>Support</span>
+        </a>
+    </nav>
+
+    <script>
+        // Synchronized Cryptographic Mapping Database (Identical to home.html logic)
+        const chorixLedgerData = [
+            { urdu: "ا / ع", roman: "A", symbol: "亼" },
+            { urdu: "ب", roman: "B", symbol: "冂" },
+            { urdu: "پ", roman: "P", symbol: "円" },
+            { urdu: "ت / ط", roman: "T", symbol: "丁" },
+            { urdu: "ٹ", roman: "X", symbol: "卝" },
+            { urdu: "س / ث / ص", roman: "S", symbol: "彡" },
+            { urdu: "ج", roman: "J", symbol: "丩" },
+            { urdu: "چ", roman: "C", symbol: "屮" },
+            { urdu: "ح / ہ", roman: "H", symbol: "爿" },
+            { urdu: "خ", roman: "K", symbol: "巛" },
+            { urdu: "د", roman: "D", symbol: "刀" },
+            { urdu: "ڈ", roman: "V", symbol: "叏" },
+            { urdu: "ز / ذ / ض / ظ", roman: "Z", symbol: "乙" },
+            { urdu: "ر", roman: "R", symbol: "卜" },
+            { urdu: "ڑ", roman: "Y", symbol: "丫" },
+            { urdu: "ش", roman: "W", symbol: "山" },
+            { urdu: "ف", roman: "F", symbol: "匚" },
+            { urdu: "ق / ک", roman: "Q", symbol: "口" },
+            { urdu: "گ", roman: "G", symbol: "廾" },
+            { urdu: "ل", roman: "L", symbol: "乚" },
+            { urdu: "م", roman: "M", symbol: "爪" },
+            { urdu: "ن", roman: "N", symbol: "冂" },
+            { urdu: "و", roman: "O", symbol: "〇" },
+            { urdu: "ی", roman: "E", symbol: "乂" },
+            { urdu: "ے", roman: "I", symbol: "乂" }
+        ];
+
+        // Hydrate UI State & Verify Preferences Hooks
+        window.addEventListener('DOMContentLoaded', () => {
+            // Apply Global Synchronized Storage Theme Status Checks
+            const savedTheme = localStorage.getItem('tarjuman-theme') || 'dark';
+            document.body.className = savedTheme === 'light' ? 'light-theme' : 'dark-theme';
+
+            // Programmatic Error-Free Card Nodes Renderer Loop
+            const gridContainer = document.getElementById('dictionaryGrid');
+            gridContainer.innerHTML = ''; // Sanitize container block structure
+
+            chorixLedgerData.forEach(node => {
+                const cardTemplate = `
+                    <div class="matrix-token-card">
+                        <div class="token-native-side">
+                            <div class="native-lang-row">Urdu: <span>${node.urdu}</span></div>
+                            <div class="native-lang-row">Roman: <span>${node.roman}</span></div>
+                        </div>
+                        <div class="token-crypto-symbol">${node.symbol}</div>
+                    </div>
+                `;
+                gridContainer.innerHTML += cardTemplate;
+            });
+        });
+    </script>
+</body>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker Registered Successfully:', reg.scope))
+                .catch(err => console.error('Service Worker Registration Failed:', err));
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TARJUMAN - Next-Gen Chorix Platform</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Modern Design System Tokens */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #050b14 0%, #0a192f 50%, #022c22 100%);
+            --pakistan-green: #004b23;
+            --emerald-glow: #10b981;
+            --electric-indigo: #6366f1;
+            --text-pure: #ffffff;
+            --text-dark-muted: #64748b;
+            --text-light-muted: #cbd5e1;
+            --neon-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Android Native Fullscreen Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-pure);
+            perspective: 1000px;
+        }
+
+        /* Main Splash Wrapper */
+        .splash-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transform-style: preserve-3d;
+            animation: appEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Professional App Logo Design (Combining Crescent, Star & Chorix Identity) */
+        .app-logo-box {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 30px;
+            transform-style: preserve-3d;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.6));
+        }
+
+        /* SVG Path Automation Keyframe Controls */
+        .svg-crescent {
+            stroke: var(--text-pure);
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawLine 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .svg-chorix-core {
+            stroke: var(--emerald-glow);
+            stroke-width: 4;
+            fill: none;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: drawLine 2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
+        }
+
+        .svg-star {
+            fill: var(--emerald-glow);
+            opacity: 0;
+            transform: scale(0);
+            transform-origin: 68px 32px;
+            animation: starPop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.8s;
+        }
+
+        /* Typography & Branding Section */
+        .brand-title {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #ffffff 30%, var(--emerald-glow) 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .brand-tagline {
+            font-size: 0.95rem;
+            color: var(--text-light-muted);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeInText 1s ease-out forwards 1s;
+        }
+
+        /* Native Android UI Circular Progress Bar */
+        .loader-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            animation: fadeInText 0.5s ease-out forwards 1.2s;
+        }
+
+        .android-spinner {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+            border-top: 4px solid var(--emerald-glow);
+            border-right: 4px solid var(--emerald-glow);
+            border-radius: 50%;
+            animation: spin 0.8s infinite linear;
+            box-shadow: var(--neon-shadow);
+        }
+
+        /* Micro Identity Footer Styling */
+        .footer-identity {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.85rem;
+            color: var(--text-dark-muted);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeInText 1s ease-out forwards 1.5s;
+        }
+
+        .footer-identity i {
+            color: #ef4444;
+            animation: heartBeat 1.2s infinite alternate cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        .footer-identity span {
+            color: var(--text-pure);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        /* Custom Automation & Animation Keyframes */
+        @keyframes appEntrance {
+            from { opacity: 0; transform: translateY(40px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes starPop {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-10px) rotateY(5deg); }
+        }
+
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes heartBeat {
+            to { transform: scale(1.3); filter: drop-shadow(0 0 5px #ef4444); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="splash-wrapper">
+        
+        <div class="app-logo-box">
+            <svg class="logo-svg" viewBox="0 0 100 100">
+                <path class="svg-crescent" d="M 30,75 A 35,35 0 1,1 75,30 A 28,28 0 1,0 30,75 Z" />
+                
+                <polygon class="svg-star" points="68,22 71,30 79,31 73,36 75,44 68,39 61,44 63,36 57,31 65,30" />
+                
+                <path class="svg-chorix-core" d="M 46,38 L 26,62 M 46,38 L 66,62 M 46,38 L 46,78" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <h1 class="brand-title">Tarjuman</h1>
+        <p class="brand-tagline">Chorix Engine v1.0</p>
+
+        <div class="loader-container">
+            <div class="android-spinner"></div>
+        </div>
+    </div>
+
+    <div class="footer-identity">
+        Crafted with <i class="fa-solid fa-heart"></i> By <span>HAIDER</span>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Smooth Native Android Activity Switch Configuration
+            setTimeout(() => {
+                document.body.style.transition = "all 0.6s cubic-bezier(0.65, 0, 0.35, 1)";
+                document.body.style.opacity = "0";
+                document.body.style.transform = "scale(1.05)";
+                
+                setTimeout(() => {
+                    // Route Redirection Sequence to Primary Translation Interface File
+                    window.location.href = 'home.html';
+                }, 600);
+            }, 3500); // 3.5 Seconds Perfect Display Frame Retention Duration
+        });
+    </script>
+</body>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker Registered Successfully:', reg.scope))
+                .catch(err => console.error('Service Worker Registration Failed:', err));
+        });
+    }
+</script>
+</html>
